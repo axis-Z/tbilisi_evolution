@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>თბილისის ევოლუცია</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      html,
+      body,
+      #map {
+        height: 100%;
+        margin: 0px;
+      }
+
+      .sidebar {
+        height: 100%;
+        width: 0;
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 50px;
+      }
+
+      .sidebar h4 {
+        padding: 0px 25px 20px 25px;
+        color: white;
+      }
+
+      .sidebar p {
+        font-size: 13px;
+        color: white;
+        padding: 0px 15px 10px 15px;
+        text-align: left;
+      }
+
+      .sidebar a {
+        padding: 5px 15px 5px 15px;
+        text-decoration: none;
+        font-size: 15px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+      }
+
+      .sidebar a:hover {
+        color: #f1f1f1;
+      }
+
+      .sidebar img {
+        padding-left: 25px;
+      }
+
+      .sidebar .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+      }
+
+      .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #111;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 1;
+        border-radius: 3px;
+      }
+
+      .openbtn:hover {
+        background-color: #444;
+      }
+
+      #main {
+        position: relative;
+        transition: margin-left 0.5s;
+        padding: 16px;
+        height: 100%;
+      }
+
+      /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+      @media screen and (max-height: 450px) {
+        .sidebar {
+          padding-top: 15px;
+        }
+        .sidebar a {
+          font-size: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!--For Interactive Sidebar Body-->
+
+    <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+      <h4>თბილისის ევოლუცია</h4>
+      <p>
+        ეს ინტერაქტიული პორტალი ასახავს ქალაქის ფიზიკური გარემოს ცვლილებას
+        გასული საუკუნის 1970-80-იანი წლებიდან თანამედროვეობამდე. ამ მხრივ,
+        მოცემული სამგანზომილებიანი მოდელი მნიშვნელოვანი ხელსაწყოა
+        მკვლევარებისთვის, ანალიტიკოსების, გადაწყვეტილების მიმღები თუ უბრალოდ,
+        ქალაქის განვითარებით დაინტერესებული პირებისთვის, მარტივი ვიზუალიზაციის
+        მეშვეობით, თავადვე დააკვირდნენ როგორ შეიცვალა ქვეყნის დედაქალაქი დროსა
+        და სივრცეში.
+      </p>
+      <p>
+        უფრო კონკრეტულად, მოცემული ციფრული მოდელი ასახავს ქალაქის
+        განაშენიანების, სიმჭიდროვის, სართულიანობისა და ფუნქციურობის ცვლილებას.
+      </p>
+      <p>
+        რუკის დათვალიერება შესაძლებელია 2D ან 3D განზომილებაში. ამისთვის, მხოლოდ
+        მაუსის ორივე ღილაკზე დაჭერა და სასურველი მიმართულებით მოძრაობაა საჭირო.
+        ობიექტების ფუნქციური დატვირთვის ნახვა მათთან მიახლოებითაა შესაძლებელი
+      </p>
+      <p>
+        რუკა მომზადდა ილიას სახელმწიფო უნივერსიტეტისა და შოთა რუსთაველის
+        საქართველოს ეროვნული სამეცნიერო ფონდის ერთობლივი პროექტის
+        <i>"თბილისი, როგორც ურბანული თანაკვეთის სივრცე"</i> ფარგლებში, ილიას
+        სახელმწიფო უნივერსტიტეტის არქიტექტურის პროგრამის სტუდენტებიs ჩართულობით
+      </p>
+      <p><b>მასალები და მონაცემთა წყარო:</b></p>
+      <p>
+        • 1:2 000 მასშტაბის საბჭოთა ტოპო<br />
+        • საჯარო რეესტრის ეროვნული სააგენტო<br />
+        • თბილისის მერია
+      </p>
+      <br />
+      <img
+        src="https://zaxis.ge/wp-content/uploads/2022/03/partners_tbilisi_evolution_web-01.png"
+        style="width: 250px; height: 60px"
+      />
+    </div>
+
+    <button
+      class="openbtn"
+      onclick="openNav()"
+      style="font-family: Helvetica; font-size: 14px"
+    >
+      რუკის შესახებ
+    </button>
+    <div id="map"></div>
+
+    <script>
+      function openNav() {
+        document.getElementById("mySidebar").style.width = "320px";
+        document.getElementById("main").style.marginLeft = "320px";
+      }
+
+      function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+      }
+    </script>
+    <style>
+      body {
+        overflow: hidden;
+      }
+
+      body * {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+
+      .centered_1980 {
+        position: absolute;
+        left: 38%;
+        top: 4px;
+        z-index: 1000;
+      }
+
+      .centered_2018 {
+        position: absolute;
+        right: 36%;
+        top: 4px;
+        z-index: 1000;
+      }
+
+      /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+      @media screen and (max-height: 450px) {
+        .sidebar {
+          padding-top: 15px;
+        }
+        .sidebar a {
+          font-size: 18px;
+        }
+      }
+    </style>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.css"
+      type="text/css"
+    />
+    <div id="comparison-container">
+      <div id="before" class="map">
+        <div class="centered_1980">
+          <p style="text-align: center; font-size: 17px"><b>1980</b></p>
+        </div>
+      </div>
+      <div id="after" class="map">
+        <div class="centered_2018">
+          <p style="font-size: 17px"><b>დღეს</b></p>
+        </div>
+      </div>
+    </div>
+    <script>
+      mapboxgl.accessToken =
+        "pk.eyJ1Ijoiam9yam9uZTkwIiwiYSI6ImNrZ3R6M2FvdTBwbmwycXBibGRqM2w2enYifQ.BxjvFSGqefuC9yFCrXC-nQ";
+      const beforeMap = new mapboxgl.Map({
+        container: "before",
+        style: "mapbox://styles/jorjone90/ckzyduo1o003716mu793u6zk4",
+        center: [44.8, 41.7],
+        zoom: 15.6,
+        maxZoom: 18,
+        minZoom: 13.7,
+        pitch: 55, // pitch in degrees
+        bearing: 0, // bearing in degrees
+        // causes pan & zoom handlers not to be applied, similar to
+        // .dragging.disable() and other handler .disable() funtions in Leaflet.
+        interactive: true,
+      });
+      const afterMap = new mapboxgl.Map({
+        container: "after",
+        style: "mapbox://styles/jorjone90/cl0h31r5h000m15p1pjf625v2",
+        center: [44.8, 41.7],
+        zoom: 15.6,
+        maxZoom: 18,
+        minZoom: 13.7,
+        pitch: 55, // pitch in degrees
+        bearing: 0, // bearing in degrees
+        // causes pan & zoom handlers not to be applied, similar to
+        // .dragging.disable() and other handler .disable() funtions in Leaflet.
+        interactive: true,
+      });
+
+      // A selector or reference to HTML element
+      const container = "#comparison-container";
+
+      const map = new mapboxgl.Compare(beforeMap, afterMap, container, {
+        // Set this to enable comparing two maps by mouse movement:
+        // mousemove: true
+      });
+    </script>
+  </body>
+</html>
